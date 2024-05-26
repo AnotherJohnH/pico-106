@@ -20,9 +20,24 @@
 #  SOFTWARE.
 #-------------------------------------------------------------------------------
 
+add_custom_command(
+   COMMENT
+      "Auto-generate tables"
+   COMMAND
+      ${CMAKE_COMMAND}
+         -E env PYTHONPATH=${python_path}
+         ${CMAKE_CURRENT_SOURCE_DIR}/AUTO.py
+   DEPENDS
+      ${CMAKE_CURRENT_SOURCE_DIR}/AUTO.py
+      ${python_path}/Table.py
+   OUTPUT
+      ${CMAKE_CURRENT_BINARY_DIR}/Table_dx7_exp_22.h
+      ${CMAKE_CURRENT_BINARY_DIR}/Table_dx7_exp_22.cpp
+   )
+
 add_executable(pico106
-               pico106_${PLT_TARGET}.cpp
-               Table_gamma_8.cpp)
+               Table_exp_22.cpp
+               pico106_${PLT_TARGET}.cpp)
 
 target_include_directories(pico106 PRIVATE .)
 

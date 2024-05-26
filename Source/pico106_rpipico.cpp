@@ -29,11 +29,7 @@
 #include "Table_gamma_8.h"
 
 
-// --- RP2040 module LED --------------------------------------------------------------
-
-MTL::Pwm<MTL::PIN_LED1> led;
-
-
+//! DCO control
 template <unsigned PIN>
 class DCO
 {
@@ -51,10 +47,16 @@ public:
       pwm_alt = level_ * period / 100;
    }
 
+   void setNote(unsigned midi_note_)
+   {
+   }
+
 private:
+   const unsigned CLK_DIV = (36<<4) + 14;
+
    unsigned        period;
-   MTL::Pwm<PIN>   pwm{36*16 + 14};
-   MTL::Pwm<PIN+1> pwm_alt{36*16 + 14};
+   MTL::Pwm<PIN>   pwm{CLK_DIV};
+   MTL::Pwm<PIN+1> pwm_alt{CLK_DIV};
 };
 
 
@@ -80,22 +82,18 @@ int MTL_main()
 
    while(true)
    {
-       unsigned level = 10;
+       unsigned level = 1;
 
-       while(level < 90)
+       while(level < 99)
        {
-          led = table_gamma_8[level];
-          dco.setLevel(level);
-          level++;
-          usleep(30000);
+          dco.setLevel(level++);
+          usleep(20000);
        }
 
-       while(level > 10)
+       while(level > 1)
        {
-          led = table_gamma_8[level];
-          dco.setLevel(level);
-          level--;
-          usleep(30000);
+          dco.setLevel(level--);
+          usleep(20000);
        }
    }
 
