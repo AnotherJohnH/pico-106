@@ -26,5 +26,7 @@ project(pico106
         LANGUAGES CXX C ASM
         VERSION 0.0.0)
 
+set(python_path ${CMAKE_CURRENT_SOURCE_DIR}/Platform/python)
+
 add_subdirectory(Platform)
 add_subdirectory(Source)

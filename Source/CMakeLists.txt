@@ -31,15 +31,17 @@ add_custom_command(
       ${CMAKE_CURRENT_SOURCE_DIR}/AUTO.py
       ${python_path}/Table.py
    OUTPUT
-      ${CMAKE_CURRENT_BINARY_DIR}/Table_dx7_exp_22.h
-      ${CMAKE_CURRENT_BINARY_DIR}/Table_dx7_exp_22.cpp
+      ${CMAKE_CURRENT_BINARY_DIR}/Table_exp_24.h
+      ${CMAKE_CURRENT_BINARY_DIR}/Table_exp_24.cpp
    )
 
 add_executable(pico106
-               Table_exp_22.cpp
+               Table_exp_24.cpp
                pico106_${PLT_TARGET}.cpp)
 
-target_include_directories(pico106 PRIVATE .)
+target_include_directories(pico106
+                           PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
+                           PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
 if(${PLT_TARGET} STREQUAL native)
    target_link_libraries(pico106 PRIVATE PLT STB)

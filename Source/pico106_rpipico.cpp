@@ -24,9 +24,10 @@
 #include <unistd.h>
 
 #include "MTL/MTL.h"
+#include "MTL/Config.h"
 #include "MTL/rp2040/Pwm.h"
 
-#include "Table_gamma_8.h"
+#include "Table_exp_24.h"
 
 
 //! DCO control
@@ -37,8 +38,6 @@ public:
    void setPeriod(unsigned period_)
    {
       period = period_;
-
-      pwm.setPeriod(period_);
    }
 
    void setLevel(unsigned level_)
@@ -49,10 +48,31 @@ public:
 
    void setNote(unsigned midi_note_)
    {
+      const unsigned A4_MIDI = 69;
+      const unsigned A4_FREQ = 440;
+
+      printf("MIDI %03u ", midi_note_);
+      signed   midi_rel_a4 = midi_note_ - A4_MIDI;
+      signed   note_16     = midi_rel_a4 * 4096 / 12;
+      printf("=> note16 0x%4x ", note_16 + 0x8000);
+      unsigned freq_16 = table_exp_24[note_16 + 0x8000] * A4_FREQ;
+      printf("=> freq16 0x%8x ", freq_16);
+      unsigned count   = 0x10000 * (MIN_FREQ << 12) / (freq_16 >> 4);
+      printf("=> count 0x%x", count);
+
+      pwm.setPeriod(count);
+
+      unsigned level = 0x20;
+      printf("=> level 0x%x\n", level);
+
+      pwm     = level;
+      pwm_alt = level;
    }
 
 private:
-   const unsigned CLK_DIV = (36<<4) + 14;
+   const unsigned MIN_FREQ = 8;
+   const unsigned PWM_FREQ = MIN_FREQ * 0x10000;
+   const unsigned CLK_DIV  = CLOCK_FREQ * 16 / PWM_FREQ;
 
    unsigned        period;
    MTL::Pwm<PIN>   pwm{CLK_DIV};
@@ -78,10 +98,13 @@ int MTL_main()
    printf("Compiler : %s\n", __VERSION__);
    printf("\n");
 
-   dco.setPeriod(0x1000);
+   dco.setNote(69);
+
+   getchar();
 
    while(true)
    {
+#if 0
        unsigned level = 1;
 
        while(level < 99)
@@ -95,6 +118,13 @@ int MTL_main()
           dco.setLevel(level--);
           usleep(20000);
        }
+#endif
+
+      for(unsigned midi_note = 0; midi_note < 128; midi_note++)
+      {
+         usleep(500000);
+         dco.setNote(midi_note);
+      }
    }
 
    return 0;

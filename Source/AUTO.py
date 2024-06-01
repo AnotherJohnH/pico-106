@@ -25,13 +25,12 @@ import math
 import sys
 import Table
 
-
 #------------------------------------------------------------------------------
-# 14-bit (Q4.10) => 22-bit 2^x table
+# 16-bit (Q4.12) => 24-bit 2^x table
 
-Table.gen('exp_22',
+Table.gen('exp_24',
           bits       = 32,
-          func       = lambda i,x : int(math.pow(2.0, i / 1024 ) * 64 + 0.5),
-          log2_size  = 14,
+          func       = lambda i,x : int(math.pow(2.0, i / 4096) * 256 + 0.5),
+          log2_size  = 16,
           prefix     = '0x',
-          fmt        = '08x')
+          fmt        = '06x')
