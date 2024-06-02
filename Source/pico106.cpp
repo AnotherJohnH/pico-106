@@ -21,19 +21,13 @@
 //------------------------------------------------------------------------------
 
 #include <cstdio>
-#include <unistd.h>
 
 #include "MTL/MTL.h"
-#include "MTL/Digital.h"
-#include "MTL/Config.h"
-#include "MTL/rp2040/Pwm.h"
 #include "MTL/rp2040/Uart.h"
 
 #include "STB/MIDIInterface.h"
 
-#include "Table_exp_24.h"
-
-#include "DCO.h"
+#include "Synth.h"
 
 
 // --- MIDI-in -----------------------------------------------------------------
@@ -76,58 +70,6 @@ public:
 
 // -----------------------------------------------------------------------------
 
-class Synth : public MIDI::Instrument
-{
-public:
-   Synth()
-      : MIDI::Instrument(/* num_voices */ 1)
-   {
-   }
-
-   void tick()
-   {
-      midi_in0.tick();
-      midi_in1.tick();
-   }
-
-private:
-   signed allocVoice() const override
-   {
-      return 0;
-   }
-
-   signed findVoice(uint8_t note_) const override
-   {
-      return active_note == note_ ? 0 : -1;
-   }
-
-   void voiceOn(unsigned voice_, uint8_t note_, uint8_t velocity_) override
-   {
-      active_note = note_;
-
-      dco.noteOn(note_);
-
-      led = true;
-   }
-
-   void voiceOff(unsigned voice_, uint8_t velocity_) override
-   {
-      active_note = 0;
-
-      dco.noteOff();
-
-      led = false;
-   }
-
-   unsigned                         active_note;
-   MidiIn0                          midi_in0{*this};
-   MidiIn1                          midi_in1{*this};
-   MTL::Digital::Out<MTL::PIN_LED1> led;
-   DCO<MTL::PIN_6>                  dco;
-};
-
-
-
 int MTL_main()
 {
    // Clear screen and cursor to home
@@ -143,70 +85,13 @@ int MTL_main()
    printf("Compiler : %s\n", __VERSION__);
    printf("\n");
 
-   Synth synth;
+   Synth   synth;
+   MidiIn0 midi_in0{synth};
+   MidiIn1 midi_in1{synth};
 
    while(true)
    {
-      synth.tick();
+      midi_in0.tick();
+      midi_in1.tick();
    }
-
-#if 0
-   static signed adjust[10] = {0};
-
-   bool exit{false};
-
-   while(not exit)
-   {
-#if 0
-       unsigned level = 1;
-
-       while(level < 99)
-       {
-          dco.setLevel(level++);
-          usleep(20000);
-       }
-
-       while(level > 1)
-       {
-          dco.setLevel(level--);
-          usleep(20000);
-       }
-#endif
-
-      unsigned i = 0;
-      for(unsigned midi_note = 21; midi_note < 128; )
-      {
-         dco.setNote(midi_note, adjust[i]);
-
-         char ch = getchar();
-         if (ch == 'u')
-         {
-            adjust[i] += 1;
-         }
-         else if (ch == 'd')
-         {
-            adjust[i] -= 1;
-         }
-         else if (ch == 'n')
-         {
-            midi_note += 12;
-            ++i;
-         }
-         else if (ch == 'g')
-         {
-            exit = true;
-            break;
-         }
-      }
-   }
-
-   while(true)
-   {
-      for(unsigned midi_note = 21; midi_note <= 127; midi_note++)
-      {
-         dco.setNote(midi_note, 0);
-         usleep(160000);
-      }
-   }
-#endif
 }

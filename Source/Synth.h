@@ -22,65 +22,62 @@
 
 #pragma once
 
-#include "MTL/Config.h"
-#include "MTL/rp2040/Pwm.h"
+#include "MTL/Digital.h"
+#include "STB/MIDIInstrument.h"
 
-#include "Table_exp_24.h"
+#include "DCO.h"
+#include "Voice.h"
 
 
-class DCO
+class Synth : public MIDI::Instrument
 {
 public:
-   virtual void noteOn(unsigned midi_note_) = 0;
-   virtual void noteOff() = 0;
-};
-
-
-//! DCO implement via PWM
-template <unsigned PIN>
-class DCO_PWM : public DCO
-{
-public:
-   void noteOn(unsigned midi_note_) override
+   Synth()
+      : MIDI::Instrument(NUM_VOICE)
    {
-      const unsigned A4_MIDI = 69;
-      const unsigned A4_FREQ = 440;
-
-      //printf("MIDI %03u ", midi_note_);
-      signed   midi_rel_a4 = midi_note_ - A4_MIDI;
-      signed   note_16     = midi_rel_a4 * 4096 / 12;
-      //printf("=> note16 %4x ", note_16 + 0x8000);
-
-      unsigned freq_16 = table_exp_24[note_16 + 0x8000] * A4_FREQ;
-      //printf("=> freq16 %8x ", freq_16);
-
-      unsigned count   = 0x10000 * (MIN_FREQ << 12) / (freq_16 >> 4);
-      //printf("=> count %4x", count);
-
-      pwm.setPeriod(count);
-
-      unsigned level = 0x30;
-
-      if (level >= count)
-         level = count - 1;
-
-      printf("=> level 0x%x\n", level);
-
-      pwm     = level;
-      pwm_alt = level;
-   }
-
-   void noteOff() override
-   {
-      pwm.setWidth(0);
+      voice[0].setDCO(dco0);
+      voice[1].setDCO(dco1);
    }
 
 private:
-   const unsigned MIN_FREQ = 8;
-   const unsigned PWM_FREQ = MIN_FREQ * 0x10000;
-   const unsigned CLK_DIV  = CLOCK_FREQ * 16 / PWM_FREQ;
+   signed allocVoice() const override
+   {
+      for(unsigned i = 0; i < NUM_VOICE; ++i)
+      {
+         if (not voice[i].isActive()) return i;
+      }
+      return 0;
+   }
 
-   MTL::Pwm<PIN>   pwm{CLK_DIV};
-   MTL::Pwm<PIN+1> pwm_alt{CLK_DIV};
+   signed findVoice(uint8_t note_) const override
+   {
+      for(unsigned i = 0; i < NUM_VOICE; ++i)
+      {
+         if (voice[i].isPlaying(note_)) return i;
+      }
+      return -1;
+   }
+
+   void voiceOn(unsigned index_, uint8_t note_, uint8_t velocity_) override
+   {
+      voice[index_].noteOn(note_);
+
+      ++active;
+      led = true;
+   }
+
+   void voiceOff(unsigned index_, uint8_t velocity_) override
+   {
+      voice[index_].noteOff();
+
+      led = --active > 0;
+   }
+
+   static const unsigned NUM_VOICE = 2;
+
+   Voice                            voice[NUM_VOICE];
+   unsigned                         active{0};
+   MTL::Digital::Out<MTL::PIN_LED1> led;
+   DCO_PWM<MTL::PIN_6>              dco0;
+   DCO_PWM<MTL::PIN_19>             dco1;
 };
-
