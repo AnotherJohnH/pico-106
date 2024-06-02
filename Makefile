@@ -1,5 +1,5 @@
 
-targets = rpipico native
+targets = rpipico
 
 all: $(targets)
 

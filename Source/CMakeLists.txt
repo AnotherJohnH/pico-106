@@ -37,18 +37,14 @@ add_custom_command(
 
 add_executable(pico106
                Table_exp_24.cpp
-               pico106_${PLT_TARGET}.cpp)
+               pico106.cpp)
 
 target_include_directories(pico106
                            PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
                            PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
-if(${PLT_TARGET} STREQUAL native)
-   target_link_libraries(pico106 PRIVATE PLT STB)
+target_link_libraries(pico106 PRIVATE TNY MTL TNY)
 
-elseif(${PLT_TARGET} STREQUAL rpipico)
-   target_link_libraries(pico106 PRIVATE TNY MTL TNY)
+add_executable(test_midi_in test_midi_in.cpp)
 
-   add_executable(test_midi_in test_midi_in.cpp)
-   target_link_libraries(test_midi_in PRIVATE TNY MTL TNY)
-endif()
+target_link_libraries(test_midi_in PRIVATE TNY MTL TNY)
