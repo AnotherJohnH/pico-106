@@ -39,6 +39,8 @@ public:
       voice[1].setDCO(dco1);
    }
 
+   bool isAnyVoiceOn() const { return active != 0; }
+
 private:
    signed allocVoice() const override
    {

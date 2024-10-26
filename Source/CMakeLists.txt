@@ -45,6 +45,5 @@ target_include_directories(pico106
 
 target_link_libraries(pico106 PRIVATE TNY MTL TNY)
 
-add_executable(test_midi_in test_midi_in.cpp)
-
-target_link_libraries(test_midi_in PRIVATE TNY MTL TNY)
+# add_executable(test_midi_in test_midi_in.cpp)
+# target_link_libraries(test_midi_in PRIVATE TNY MTL TNY)

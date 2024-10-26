@@ -23,7 +23,7 @@
 #pragma once
 
 #include "MTL/Config.h"
-#include "MTL/rp2040/Pwm.h"
+#include "MTL/chip/Pwm.h"
 
 #include "Table_exp_24.h"
 

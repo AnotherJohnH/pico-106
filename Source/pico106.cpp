@@ -20,52 +20,96 @@
 // SOFTWARE.
 //------------------------------------------------------------------------------
 
+// \brief Synth for Raspberry Pi Pico (based around DCOs like June 106)
+
 #include <cstdio>
 
-#include "MTL/MTL.h"
-#include "MTL/rp2040/Uart.h"
-
 #include "STB/MIDIInterface.h"
+
+#include "MTL/MTL.h"
+#include "MTL/chip/Uart.h"
 
 #include "Synth.h"
 
 
-// --- MIDI-in -----------------------------------------------------------------
+// --- Target Hardware Configuration --------------------------------------------------
 
-//! Physical MIDI in
-class MidiIn1 : public MIDI::Interface
-{               
-public:         
-   MidiIn1(MIDI::Instrument& instrument)
-      : MIDI::Interface(instrument)
-   {}
-
-private:
-   bool empty() const override { return uart.empty(); }
-   
-   uint8_t rx() override { return uart.rx(); }
-
-   MTL::Uart1_ALT uart{/* baud */   31250,
-                       /* bits */   8,
-                       /* parity */ MTL::UART::NONE,
-                       /* stop */   1};
-};
+#define HW_MIDI_UART1
+#define HW_MIDI_USB_DEVICE
+#define HW_LED
 
 
-// --- debug MIDI-in -----------------------------------------------------------
+// ------------------------------------------------------------------------------------
 
-//! Slow MIDI in via the console UART
-class MidiIn0 : public MIDI::Interface
+static Synth synth {};
+
+
+// --- MIDI-IN -----------------------------------------------------------------
+
+#if defined(HW_MIDI_UART1)
+
+// pico pin 7 : IN
+
+//! Physical MIDI at 31250 baud
+class MidiPhys : public MIDI::Interface
 {
 public:
-   MidiIn0(MIDI::Instrument& instrument)
+   MidiPhys(MIDI::Instrument& instrument)
       : MIDI::Interface(instrument)
    {}
 
-   bool empty() const override { return MTL_getch_empty(); }
+   bool empty() const override { return uart.empty(); }
 
-   uint8_t rx() override { return MTL_getch(); }
+   uint8_t rx() override { return uart.rx(); }
+
+   void tx(uint8_t byte) { return uart.tx(byte); }
+
+private:
+   MTL::Uart1_P6_P7 uart{31250, 8, MTL::UART::NONE, 1};
 };
+
+static MidiPhys midi_in {synth};
+
+#endif
+
+
+// --- USB MIDI ----------------------------------------------------------------
+
+#if defined(HW_MIDI_USB_DEVICE)
+
+// pico micro USB : MIDI in
+
+#include "Pico106USBDevice.h"
+
+class MidiUSB : public MIDI::Interface
+{
+public:
+   MidiUSB(MIDI::Instrument& instrument)
+      : MIDI::Interface(instrument)
+   {}
+
+   bool empty() const override { return device.empty(); }
+
+   uint8_t rx() override { return device.rx(); }
+
+   Pico106USBDevice device{};
+   MTL::Usb         usb{device};
+};
+
+static MidiUSB midi_usb {synth};
+
+extern "C" void IRQ_USBCTRL() { midi_usb.usb.irq(); }
+
+#endif
+
+
+// --- Key press LED ------------------------------------------------------------------
+
+#if defined(HW_LED)
+
+MTL::Digital::Out<MTL::PIN_LED1> led;
+
+#endif
 
 
 // -----------------------------------------------------------------------------
@@ -79,19 +123,24 @@ int MTL_main()
    printf("\n");
    printf("Program  : pico106\n");
    printf("Author   : Copyright (c) 2024 John D. Haughton\n");
-   printf("Version  : %s\n", MTL_VERSION);
-   printf("Commit   : %s\n", MTL_COMMIT);
+   printf("Version  : %s\n", PLT_VERSION);
+   printf("Commit   : %s\n", PLT_COMMIT);
    printf("Built    : %s %s\n", __TIME__, __DATE__);
    printf("Compiler : %s\n", __VERSION__);
    printf("\n");
 
-   Synth   synth;
-   MidiIn0 midi_in0{synth};
-   MidiIn1 midi_in1{synth};
-
    while(true)
    {
-      midi_in0.tick();
-      midi_in1.tick();
+      midi_in.tick();
+
+#if defined(HW_MIDI_USB_DEVICE)
+      midi_usb.tick();
+#endif
+
+#if defined(HW_LED)
+      led = synth.isAnyVoiceOn();
+#endif
    }
+
+   return 0;
 }
