@@ -27,19 +27,20 @@
 #include "STB/MIDIInterface.h"
 
 #include "MTL/MTL.h"
+#include "MTL/Digital.h"
 #include "MTL/chip/Uart.h"
 
 #include "Synth.h"
 
 
-// --- Target Hardware Configuration --------------------------------------------------
+// --- Target Hardware Configuration -------------------------------------------
 
 #define HW_MIDI_UART1
 #define HW_MIDI_USB_DEVICE
 #define HW_LED
 
 
-// ------------------------------------------------------------------------------------
+// -----------------------------------------------------------------------------
 
 static Synth synth {};
 
@@ -65,7 +66,7 @@ public:
    void tx(uint8_t byte) { return uart.tx(byte); }
 
 private:
-   MTL::Uart1_P11_P12 uart{31250, 8, MTL::UART::NONE, 1};
+   MTL::Uart1_P26_P27 uart{31250, 8, MTL::UART::NONE, 1};
 };
 
 static MidiPhys midi_in {synth};
@@ -103,7 +104,7 @@ extern "C" void IRQ_USBCTRL() { midi_usb.usb.irq(); }
 #endif
 
 
-// --- Key press LED ------------------------------------------------------------------
+// --- Key press LED -----------------------------------------------------------
 
 #if defined(HW_LED)
 

@@ -46,7 +46,6 @@ public:
       const unsigned A4_MIDI = 69;
       const unsigned A4_FREQ = 440;
 
-      printf("MIDI %03u ", midi_note_);
       signed   midi_rel_a4 = midi_note_ - A4_MIDI;
       signed   note_16     = midi_rel_a4 * 4096 / 12;
       printf("=> note16 %4x ", note_16 + 0x8000);

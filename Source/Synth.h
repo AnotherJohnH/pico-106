@@ -22,7 +22,6 @@
 
 #pragma once
 
-#include "MTL/Digital.h"
 #include "STB/MIDIInstrument.h"
 
 #include "DCO.h"
@@ -37,6 +36,8 @@ public:
    {
       voice[0].setDCO(dco0);
       voice[1].setDCO(dco1);
+      voice[2].setDCO(dco2);
+      voice[3].setDCO(dco3);
    }
 
    bool isAnyVoiceOn() const { return active != 0; }
@@ -65,21 +66,20 @@ private:
       voice[index_].noteOn(note_);
 
       ++active;
-      led = true;
    }
 
    void voiceOff(unsigned index_, uint8_t velocity_) override
    {
       voice[index_].noteOff();
-
-      led = --active > 0;
    }
 
+   static const unsigned MAX_VOICE = 4;
    static const unsigned NUM_VOICE = 2;
 
-   Voice                            voice[NUM_VOICE];
-   unsigned                         active{0};
-   MTL::Digital::Out<MTL::PIN_LED1> led;
-   DCO_PWM<MTL::PIN_6>              dco0;
-   DCO_PWM<MTL::PIN_19>             dco1;
+   Voice                voice[MAX_VOICE];
+   unsigned             active{0};
+   DCO_PWM<MTL::PIN_4>  dco0;
+   DCO_PWM<MTL::PIN_6>  dco1;
+   DCO_PWM<MTL::PIN_9>  dco2;
+   DCO_PWM<MTL::PIN_11> dco3;
 };
