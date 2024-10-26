@@ -2,16 +2,15 @@
 
 Hybrid synthesizer inspired by the Roland Juno-106.
 
-Two DCOs driven by a Raspberry Pi Pico with a USB MIDI interface.
+DCOs driven by a Raspberry Pi Pico with a USB MIDI interface.
 
 ## Status
 
-Usable as a musical "instrument" but plenty to do...
+Usable as a musical instrument but plenty to do...
 
 ## Hardware
 
 [schematic](https://github.com/AnotherJohnH/pico106/blob/main/docs/schematic_v0.01.pdf)
-
 
 ## Software
 
@@ -35,7 +34,7 @@ or
 
 ### Build
 
-Being developed on MacOS but should build fine on Linux too.
+Being developed on MacOS but should build on Linux too.
 
     make
 
