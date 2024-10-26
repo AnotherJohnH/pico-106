@@ -1,5 +1,5 @@
 
-targets = rpipico
+targets = rpipico rpipico2
 
 all: $(targets)
 

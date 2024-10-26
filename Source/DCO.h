@@ -46,16 +46,16 @@ public:
       const unsigned A4_MIDI = 69;
       const unsigned A4_FREQ = 440;
 
-      //printf("MIDI %03u ", midi_note_);
+      printf("MIDI %03u ", midi_note_);
       signed   midi_rel_a4 = midi_note_ - A4_MIDI;
       signed   note_16     = midi_rel_a4 * 4096 / 12;
-      //printf("=> note16 %4x ", note_16 + 0x8000);
+      printf("=> note16 %4x ", note_16 + 0x8000);
 
       unsigned freq_16 = table_exp_24[note_16 + 0x8000] * A4_FREQ;
-      //printf("=> freq16 %8x ", freq_16);
+      printf("=> freq16 %8x ", freq_16);
 
       unsigned count   = 0x10000 * (MIN_FREQ << 12) / (freq_16 >> 4);
-      //printf("=> count %4x", count);
+      printf("=> count %4x", count);
 
       pwm.setPeriod(count);
 
@@ -66,8 +66,7 @@ public:
 
       printf("=> level 0x%x\n", level);
 
-      pwm     = level;
-      pwm_alt = level;
+      pwm.setPair((level << 16) |level);
    }
 
    void noteOff() override
@@ -80,7 +79,6 @@ private:
    const unsigned PWM_FREQ = MIN_FREQ * 0x10000;
    const unsigned CLK_DIV  = CLOCK_FREQ * 16 / PWM_FREQ;
 
-   MTL::Pwm<PIN>   pwm{CLK_DIV};
-   MTL::Pwm<PIN+1> pwm_alt{CLK_DIV};
+   MTL::Pwm<PIN, /* PAIR */ true> pwm{CLK_DIV};
 };
 

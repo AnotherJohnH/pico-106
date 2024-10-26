@@ -65,7 +65,7 @@ public:
    void tx(uint8_t byte) { return uart.tx(byte); }
 
 private:
-   MTL::Uart1_P6_P7 uart{31250, 8, MTL::UART::NONE, 1};
+   MTL::Uart1_P11_P12 uart{31250, 8, MTL::UART::NONE, 1};
 };
 
 static MidiPhys midi_in {synth};
@@ -131,10 +131,14 @@ int MTL_main()
 
    while(true)
    {
+#if defined(HW_MIDI_UART1)
       midi_in.tick();
+#endif
 
 #if defined(HW_MIDI_USB_DEVICE)
       midi_usb.tick();
+
+      midi_usb.setDebug(true);
 #endif
 
 #if defined(HW_LED)
