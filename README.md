@@ -10,6 +10,9 @@ Usable as a musical "instrument" but plenty to do...
 
 ## Hardware
 
+[schematic](https://github.com/AnotherJohnH/pico106/blob/main/docs/schematic_v0.01.pdf)
+
+
 ## Software
 
 ### Dependencies
