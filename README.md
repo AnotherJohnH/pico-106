@@ -2,7 +2,7 @@
 
 ![pico106](docs/pico106.png)
 
-Hybrid synthesizer inspired by the Roland Juno-106.
+Hybrid synthesizer inspired by the Roland Juno-106 (and close relatives).
 
 DCOs driven by a Raspberry Pi Pico with a USB MIDI interface.
 

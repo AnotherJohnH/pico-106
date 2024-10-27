@@ -28,16 +28,19 @@
 #include "Voice.h"
 
 
+template <unsigned NUM_VOICES>
 class Synth : public MIDI::Instrument
 {
 public:
    Synth()
-      : MIDI::Instrument(NUM_VOICE)
+      : MIDI::Instrument(NUM_VOICES)
    {
-      voice[0].setDCO(dco0);
-      voice[1].setDCO(dco1);
-      voice[2].setDCO(dco2);
-      voice[3].setDCO(dco3);
+      voice[0].setDCO(dco1);
+      voice[1].setDCO(dco2);
+      voice[2].setDCO(dco3);
+      voice[3].setDCO(dco4);
+      voice[4].setDCO(dco5);
+      voice[5].setDCO(dco6);
    }
 
    bool isAnyVoiceOn() const { return active != 0; }
@@ -45,7 +48,7 @@ public:
 private:
    signed allocVoice() const override
    {
-      for(unsigned i = 0; i < NUM_VOICE; ++i)
+      for(unsigned i = 0; i < NUM_VOICES; ++i)
       {
          if (not voice[i].isActive()) return i;
       }
@@ -54,7 +57,7 @@ private:
 
    signed findVoice(uint8_t note_) const override
    {
-      for(unsigned i = 0; i < NUM_VOICE; ++i)
+      for(unsigned i = 0; i < NUM_VOICES; ++i)
       {
          if (voice[i].isPlaying(note_)) return i;
       }
@@ -73,13 +76,16 @@ private:
       voice[index_].noteOff();
    }
 
-   static const unsigned MAX_VOICE = 4;
-   static const unsigned NUM_VOICE = 2;
+   // Provision for 6 DCOs
+   static const unsigned MAX_VOICES = 6;
 
-   Voice                voice[MAX_VOICE];
-   unsigned             active{0};
-   DCO_PWM<MTL::PIN_4>  dco0;
-   DCO_PWM<MTL::PIN_6>  dco1;
-   DCO_PWM<MTL::PIN_9>  dco2;
-   DCO_PWM<MTL::PIN_11> dco3;
+   Voice    voice[MAX_VOICES];
+   unsigned active{0};
+
+   DCO_PWM<MTL::PIN_4>  dco1;
+   DCO_PWM<MTL::PIN_6>  dco2;
+   DCO_PWM<MTL::PIN_9>  dco3;
+   DCO_PWM<MTL::PIN_11> dco4;
+   DCO_PWM<MTL::PIN_14> dco5;
+   DCO_PWM<MTL::PIN_16> dco6;
 };

@@ -38,18 +38,19 @@
 #define HW_MIDI_UART1
 #define HW_MIDI_USB_DEVICE
 #define HW_LED
+#define HW_VOICES   2   // Number of external DCO circuits, max 6
 
 
 // -----------------------------------------------------------------------------
 
-static Synth synth {};
+static Synth<HW_VOICES> synth {};
 
 
 // --- MIDI-IN -----------------------------------------------------------------
 
 #if defined(HW_MIDI_UART1)
 
-// pico pin 7 : IN
+// pico pin 27 : IN
 
 //! Physical MIDI at 31250 baud
 class MidiPhys : public MIDI::Interface
@@ -80,7 +81,7 @@ static MidiPhys midi_in {synth};
 
 // pico micro USB : MIDI in
 
-#include "Pico106USBDevice.h"
+#include "MTL/USBMidiDevice.h"
 
 class MidiUSB : public MIDI::Interface
 {
@@ -93,8 +94,11 @@ public:
 
    uint8_t rx() override { return device.rx(); }
 
-   Pico106USBDevice device{};
-   MTL::Usb         usb{device};
+   MTL::USBMidiDevice device{"https://github.com/AnotherJohnH",
+                             0x9106, PLT_BCD_VERSION, "pico106",
+                             PLT_COMMIT};
+
+   MTL::Usb usb{device};
 };
 
 static MidiUSB midi_usb {synth};
