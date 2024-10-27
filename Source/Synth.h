@@ -74,6 +74,8 @@ private:
    void voiceOff(unsigned index_, uint8_t velocity_) override
    {
       voice[index_].noteOff();
+
+      --active;
    }
 
    // Provision for 6 DCOs

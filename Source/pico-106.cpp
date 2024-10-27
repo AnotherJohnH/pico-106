@@ -88,7 +88,9 @@ class MidiUSB : public MIDI::Interface
 public:
    MidiUSB(MIDI::Instrument& instrument)
       : MIDI::Interface(instrument)
-   {}
+   {
+      setDebug(true);
+   }
 
    bool empty() const override { return device.empty(); }
 
@@ -142,8 +144,6 @@ int MTL_main()
 
 #if defined(HW_MIDI_USB_DEVICE)
       midi_usb.tick();
-
-      midi_usb.setDebug(true);
 #endif
 
 #if defined(HW_LED)

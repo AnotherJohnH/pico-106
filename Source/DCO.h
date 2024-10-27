@@ -65,7 +65,7 @@ public:
 
       printf("=> level 0x%x\n", level);
 
-      pwm.setPair((level << 16) |level);
+      pwm.setPair((level << 16) | level);
    }
 
    void noteOff() override
