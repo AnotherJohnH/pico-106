@@ -20,7 +20,7 @@
 // SOFTWARE.
 //------------------------------------------------------------------------------
 
-// \brief Synth for Raspberry Pi Pico (based around DCOs like June 106)
+// \brief Synth for Raspberry Pi Pico (based around DCOs like the Juno 106)
 
 #include <cstdio>
 
@@ -95,7 +95,7 @@ public:
    uint8_t rx() override { return device.rx(); }
 
    MTL::USBMidiDevice device{"https://github.com/AnotherJohnH",
-                             0x9106, PLT_BCD_VERSION, "pico106",
+                             0x9106, PLT_BCD_VERSION, "pico-106",
                              PLT_COMMIT};
 
    MTL::Usb usb{device};
@@ -126,7 +126,7 @@ int MTL_main()
    printf("\e[1,1H");
 
    printf("\n");
-   printf("Program  : pico106\n");
+   printf("Program  : pico-106\n");
    printf("Author   : Copyright (c) 2024 John D. Haughton\n");
    printf("Version  : %s\n", PLT_VERSION);
    printf("Commit   : %s\n", PLT_COMMIT);

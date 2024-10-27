@@ -1,18 +1,23 @@
-# pico106
+# pico-106
 
-![pico106](docs/pico106.png)
+![pico-106](docs/pico-106.png)
 
 Hybrid synthesizer inspired by the Roland Juno-106 (and close relatives).
 
-DCOs driven by a Raspberry Pi Pico with a USB MIDI interface.
+Some DCOs driven by a Raspberry Pi Pico with a USB MIDI interface.
 
 ## Status
 
-Usable as a musical instrument but plenty to do...
+Usable as a musical instrument but plenty more to explore...
++ No LFO
++ No PWM, sub-oscillatgor or noise
++ No filter or VCA-envelope on the oscillator signal path
 
 ## Hardware
 
-[schematic](https://github.com/AnotherJohnH/pico106/blob/main/docs/schematic_v0.01.pdf)
+[schematic](https://github.com/AnotherJohnH/pico-106/blob/main/docs/schematic_v0.01.pdf)
+
+... to be improved ;-)
 
 ## Software
 
@@ -28,11 +33,11 @@ Usable as a musical instrument but plenty to do...
 This repo uses git sub-modules, so checkout using --recurse to clone all the
 dependent source...
 
-    git clone --recurse https://github.com/AnotherJohnH/pico106.git
+    git clone --recurse https://github.com/AnotherJohnH/pico-106.git
 
 or
 
-    git clone --recurse ssh://git@github.com/AnotherJohnH/pico106.git
+    git clone --recurse ssh://git@github.com/AnotherJohnH/pico-106.git
 
 ### Build
 
@@ -49,7 +54,7 @@ Build directly using cmake...
 
 Flashable image will be found under the build sub directory here...
 
-    .../Source/pico106.uf2
+    .../Source/pico-106.uf2
 
 ## License
 

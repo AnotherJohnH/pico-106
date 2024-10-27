@@ -5,10 +5,10 @@
   (paper "A4")
 
   (title_block
-    (title "pico106")
-    (date "2024-10-26")
+    (title "pico-106")
+    (date "2024-10-27")
     (rev "0.01")
-    (company "https://github.com/AnotherJohnH/pico106")
+    (company "https://github.com/AnotherJohnH/pico-106")
   )
 
   (lib_symbols
@@ -1590,7 +1590,7 @@
     (stroke (width 0) (type default))
     (uuid 7ab7d49a-1663-4efe-88e0-25fa2632d901)
   )
-  (wire (pts (xy 46.99 63.5) (xy 40.64 63.5))
+  (wire (pts (xy 46.99 60.96) (xy 40.64 60.96))
     (stroke (width 0) (type default))
     (uuid 7c1f2a37-c125-4d9a-925a-b9fb2d9625b5)
   )
@@ -1646,7 +1646,7 @@
     (stroke (width 0) (type default))
     (uuid abc44a2e-f474-496d-ab34-05af837eb1f4)
   )
-  (wire (pts (xy 40.64 63.5) (xy 40.64 91.44))
+  (wire (pts (xy 40.64 60.96) (xy 40.64 91.44))
     (stroke (width 0) (type default))
     (uuid acc63a86-3687-4ac9-b7cf-68e2d1ad9fcf)
   )

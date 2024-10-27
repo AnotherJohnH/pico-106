@@ -35,15 +35,15 @@ add_custom_command(
       ${CMAKE_CURRENT_BINARY_DIR}/Table_exp_24.cpp
    )
 
-add_executable(pico106
+add_executable(pico-106
                Table_exp_24.cpp
-               pico106.cpp)
+               pico-106.cpp)
 
-target_include_directories(pico106
+target_include_directories(pico-106
                            PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}
                            PRIVATE ${CMAKE_CURRENT_BINARY_DIR})
 
-target_link_libraries(pico106 PRIVATE TNY MTL TNY)
+target_link_libraries(pico-106 PRIVATE TNY MTL TNY)
 
 # add_executable(test_midi_in test_midi_in.cpp)
 # target_link_libraries(test_midi_in PRIVATE TNY MTL TNY)
