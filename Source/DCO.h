@@ -24,6 +24,7 @@
 
 #include "MTL/Config.h"
 #include "MTL/chip/Pwm.h"
+#include "MTL/chip/PioClkLoFreq.h"
 
 #include "Table_exp_24.h"
 
@@ -37,10 +38,15 @@ public:
 
 
 //! DCO implement via PWM
-template <unsigned PIN>
+template <typename PIO, unsigned PIN>
 class DCO_PWM : public DCO
 {
 public:
+   DCO_PWM()
+   {
+      noteOff();
+   }
+
    void noteOn(unsigned midi_note_) override
    {
       const unsigned A4_MIDI = 69;
@@ -56,7 +62,7 @@ public:
       unsigned count   = 0x10000 * (MIN_FREQ << 12) / (freq_16 >> 4);
       printf("=> count %4x", count);
 
-      pwm.setPeriod(count);
+      dac.setPeriod(count);
 
       unsigned level = 0x30;
 
@@ -65,12 +71,14 @@ public:
 
       printf("=> level 0x%x\n", level);
 
-      pwm.setPair((level << 16) | level);
+      clk = freq_16 >> 8;
+      dac = level;
    }
 
    void noteOff() override
    {
-      pwm.setWidth(0);
+      clk = 1000000 << 8;
+      dac = 0;
    }
 
 private:
@@ -78,6 +86,7 @@ private:
    const unsigned PWM_FREQ = MIN_FREQ * 0x10000;
    const unsigned CLK_DIV  = CLOCK_FREQ * 16 / PWM_FREQ;
 
-   MTL::Pwm<PIN, /* PAIR */ true> pwm{CLK_DIV};
+   MTL::PioClkLoFreq<PIO,PIN> clk{};
+   MTL::Pwm<PIN + 1>          dac{CLK_DIV};
 };
 

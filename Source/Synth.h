@@ -84,10 +84,10 @@ private:
    Voice    voice[MAX_VOICES];
    unsigned active{0};
 
-   DCO_PWM<MTL::PIN_4>  dco1;
-   DCO_PWM<MTL::PIN_6>  dco2;
-   DCO_PWM<MTL::PIN_9>  dco3;
-   DCO_PWM<MTL::PIN_11> dco4;
-   DCO_PWM<MTL::PIN_14> dco5;
-   DCO_PWM<MTL::PIN_16> dco6;
+   DCO_PWM<MTL::Pio0, MTL::PIN_4>  dco1;
+   DCO_PWM<MTL::Pio0, MTL::PIN_6>  dco2;
+   DCO_PWM<MTL::Pio0, MTL::PIN_9>  dco3;
+   DCO_PWM<MTL::Pio1, MTL::PIN_11> dco4;
+   DCO_PWM<MTL::Pio1, MTL::PIN_14> dco5;
+   DCO_PWM<MTL::Pio1, MTL::PIN_16> dco6;
 };
