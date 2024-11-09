@@ -1,0 +1,36 @@
+.title DCO - Digitally Controlled Oscilator
+
+.include 2N2222.mdl
+.include TL072.mdl
+
+;                   V1  V2  TD TR TF PW     PER    NP
+V1 clk  0 dc 0 PULSE(0  3.3 1u 1u 1u 1.136m 2.273m 0)
+V2 dac  0 dc 0 PULSE(0  3.3 1u 1u 1u 90u    2.273m 0)
+V3 psup 0 dc 12
+V4 nsup 0 dc -12
+
+C1 n1  0   1u
+C2 clk n3  220p
+C3 n5  n7  1n
+
+R2 dac  n1   33k
+R3 n1   n2   27k
+R4 n2   vref 33k
+R5 vref n5   220k
+R6 n3   n8   1.8k
+R7 n3   0    47k
+R8 n6   n7   2.2k
+R9 n7   out  2.2k
+
+Q1 n5 n8 n7 2N2222
+
+XU2A 0 n2 psup nsup vref TL072
+XU2B 0 n5 psup nsup n7   TL072
+
+.control
+tran 50u 50m
+plot vref
+plot out
+.endc
+
+.end

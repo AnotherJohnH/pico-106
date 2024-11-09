@@ -1831,7 +1831,7 @@
     (effects (font (size 2.54 2.54) (thickness 0.508) bold (color 84 84 84 1)) (justify left bottom))
     (uuid 8f556268-2348-4679-86ef-7962b75f2840)
   )
-  (text "(1) Powered via micro USB connector on the Pico module\n(2) The Pico's USB connecTor acts as a USB MIDI-IN when running\n(3) Raspberry Pi Pico-1 (RP2040) also supported"
+  (text "(1) Powered via micro USB connector on the Pico module and a +/- 12V bench supply\n(2) The Pico's USB connecTor acts as a USB MIDI-IN when running\n(3) Raspberry Pi Pico-1 (RP2040) also supported"
     (at 179.07 173.99 0)
     (effects (font (size 1.27 1.27)) (justify left bottom))
     (uuid 910aca63-3810-4457-ac39-3f4578ca9f90)
@@ -1884,7 +1884,7 @@
     (pin "1" (uuid 33e868cb-859a-4727-9e9a-6e2a37075004))
     (pin "2" (uuid c33302e0-1296-4333-85c7-e32081d299a1))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "R7") (unit 1)
         )
@@ -1910,7 +1910,7 @@
     (pin "1" (uuid fe928275-51f2-4a55-b786-0f0138c3a91b))
     (pin "2" (uuid b664df66-9603-4b1a-b43f-f4b9736ab3c3))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "C3") (unit 1)
         )
@@ -1942,7 +1942,7 @@
     (pin "1" (uuid 2edc0b7d-7e15-4908-9f72-505b25d87d30))
     (pin "2" (uuid 883dc500-14ac-4b6b-b018-f57447cd7b21))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "D1") (unit 1)
         )
@@ -2009,7 +2009,7 @@
     (pin "8" (uuid e9e0ee66-033d-4684-864b-152c2efc148f))
     (pin "9" (uuid 0a6f53ab-b216-47ac-b902-862e5617bd6e))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "U1") (unit 1)
         )
@@ -2041,7 +2041,7 @@
     (pin "4" (uuid 3c886103-62d9-44dc-b4ea-c2f68f6be8a7))
     (pin "8" (uuid ff5b2958-ec71-4897-a626-fffbd40293e0))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "U2") (unit 1)
         )
@@ -2066,7 +2066,7 @@
     )
     (pin "1" (uuid 7168fa9b-318c-44e2-8bc3-efd2f38f7577))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "#PWR02") (unit 1)
         )
@@ -2092,7 +2092,7 @@
     (pin "1" (uuid db13254a-d970-4296-b6c0-81453e4ebef4))
     (pin "2" (uuid 8d299251-b304-4cc7-826d-756add37a452))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "R5") (unit 1)
         )
@@ -2118,7 +2118,7 @@
     (pin "1" (uuid 420f903b-331a-4c5c-bd2c-e80355435669))
     (pin "2" (uuid 00a75add-2fc5-4bb1-8ae5-ef8d13c44c47))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "R8") (unit 1)
         )
@@ -2145,7 +2145,7 @@
     (pin "2" (uuid 353d640c-71a5-4f7b-adcb-5d123d4d7388))
     (pin "3" (uuid 3fd7be99-b78d-441d-8615-378b53af8eab))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "J2") (unit 1)
         )
@@ -2172,7 +2172,7 @@
     (pin "2" (uuid e138871f-24e1-4972-9779-ba719ea0b52a))
     (pin "3" (uuid ab07bc83-890d-4bf9-bbaf-9ebc23e923be))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "Q1") (unit 1)
         )
@@ -2202,7 +2202,7 @@
     (pin "5" (uuid 5c0a07a7-1b30-4be8-aef1-554f08c12aed))
     (pin "6" (uuid a4829fec-ff33-4190-9564-dbae57d2dea8))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "U3") (unit 1)
         )
@@ -2227,7 +2227,7 @@
     )
     (pin "1" (uuid bc833fc1-58fe-4405-8e1a-3172aff4b103))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "#PWR05") (unit 1)
         )
@@ -2253,7 +2253,7 @@
     (pin "1" (uuid 17c53062-757a-4f28-a59f-ca28e7a1e7e3))
     (pin "2" (uuid 86c4227b-19a8-4e6b-be28-d8b938e3bcd9))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "R2") (unit 1)
         )
@@ -2279,7 +2279,7 @@
     (pin "1" (uuid cd919874-4def-4d69-9d25-3e5d41fc5d91))
     (pin "2" (uuid 5c9d4846-a0b5-47b5-be44-5feaee9fa281))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "SW1") (unit 1)
         )
@@ -2306,7 +2306,7 @@
     (pin "S" (uuid 8db843ed-9250-493d-a1a5-e3f3d5fcefca))
     (pin "T" (uuid 1fb46fd8-1c8c-4408-bda3-ac6d24c1a629))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "J3") (unit 1)
         )
@@ -2331,7 +2331,7 @@
     )
     (pin "1" (uuid 38054c23-ad80-410e-9990-d8229c3b601e))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "#PWR09") (unit 1)
         )
@@ -2356,7 +2356,7 @@
     )
     (pin "1" (uuid cf42962a-d568-4b82-99a3-e69e6677e599))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "#PWR06") (unit 1)
         )
@@ -2382,7 +2382,7 @@
     (pin "1" (uuid aaedc9cf-14e2-4b84-9df7-ce639817835f))
     (pin "2" (uuid c33d6d22-f988-4059-8a7d-50263028fbd4))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "R3") (unit 1)
         )
@@ -2414,7 +2414,7 @@
     (pin "4" (uuid 9a165d8b-666c-4a92-81bd-37e48d68c2d6))
     (pin "8" (uuid aaba9802-4f76-4d1e-8d59-19b0bb5d862d))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "U2") (unit 2)
         )
@@ -2439,7 +2439,7 @@
     )
     (pin "1" (uuid b13a66d1-25eb-45e6-8188-ab81bb275dca))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "#PWR011") (unit 1)
         )
@@ -2465,7 +2465,7 @@
     (pin "1" (uuid 568795c2-2f07-47bb-ac12-263ac1ad26a4))
     (pin "2" (uuid 4c01300a-a81d-45ed-a712-1edec83ad7ce))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "R9") (unit 1)
         )
@@ -2494,7 +2494,7 @@
     (pin "4" (uuid 418e18e7-6e21-4fa2-9768-d00afeeaf3c6))
     (pin "5" (uuid 79cab84f-376d-49a7-847c-b8aa115df7db))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "J1") (unit 1)
         )
@@ -2520,7 +2520,7 @@
     (pin "1" (uuid c3ebc415-a5ac-4471-aec3-e005bb77bbc7))
     (pin "2" (uuid 13a5cb54-da5d-4dc6-b3d1-cd00dcc8c72c))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "R1") (unit 1)
         )
@@ -2546,7 +2546,7 @@
     (pin "1" (uuid 8270e44c-62cb-4e7f-9b90-d82e5c01549c))
     (pin "2" (uuid c6c341db-1621-4cbf-a4df-1e22087d97f0))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "C2") (unit 1)
         )
@@ -2572,7 +2572,7 @@
     (pin "1" (uuid 4cfa3bbc-a6d0-49f9-b135-e08e571f0a5d))
     (pin "2" (uuid ee5dd65d-b796-44fe-a475-ad7fcf57a90e))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "R4") (unit 1)
         )
@@ -2586,7 +2586,7 @@
     (property "Reference" "C1" (at 151.13 78.74 90)
       (effects (font (size 1.27 1.27)))
     )
-    (property "Value" "47uF" (at 148.59 78.74 90)
+    (property "Value" "1uF" (at 148.59 78.74 90)
       (effects (font (size 1.27 1.27)))
     )
     (property "Footprint" "" (at 145.7452 82.55 0)
@@ -2598,7 +2598,7 @@
     (pin "1" (uuid 77d7f443-98ca-4665-8364-6e188778d82c))
     (pin "2" (uuid de63af54-cca1-4863-b9ad-b1093472eade))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "C1") (unit 1)
         )
@@ -2623,7 +2623,7 @@
     )
     (pin "1" (uuid 908ce8c6-9431-4352-9c10-8fe0cff2b871))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "#PWR08") (unit 1)
         )
@@ -2648,7 +2648,7 @@
     )
     (pin "1" (uuid 821cda84-d5fd-4df7-9d6f-ade9f73434c4))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "#PWR01") (unit 1)
         )
@@ -2675,7 +2675,7 @@
     (pin "2" (uuid f15a0760-3680-4ed4-969b-50503ea8581c))
     (pin "3" (uuid 73d08e24-7ec7-4da8-bffa-453b7d118c25))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "J4") (unit 1)
         )
@@ -2700,7 +2700,7 @@
     )
     (pin "1" (uuid f512df0b-2a1d-4aeb-a7d7-9d120ecc1ee8))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "#PWR010") (unit 1)
         )
@@ -2725,7 +2725,7 @@
     )
     (pin "1" (uuid f26fe51e-134d-4715-96e7-0740e185c901))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "#PWR03") (unit 1)
         )
@@ -2750,7 +2750,7 @@
     )
     (pin "1" (uuid e6ce0db2-7997-405e-afcc-9a20bf1a3ff7))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "#PWR04") (unit 1)
         )
@@ -2776,7 +2776,7 @@
     (pin "1" (uuid 1ebf2fdf-bfb8-4972-b8dc-07a229a65cfe))
     (pin "2" (uuid c815676a-0cb7-4d06-ba72-903fc8c0a4b4))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "R6") (unit 1)
         )
@@ -2801,7 +2801,7 @@
     )
     (pin "1" (uuid a28a15dc-8fd3-4c77-a1a6-885519336776))
     (instances
-      (project "pico106"
+      (project "pico-106"
         (path "/8dd66cb3-bd85-43a0-9ef0-1bd8a27e677c"
           (reference "#PWR07") (unit 1)
         )
