@@ -38,7 +38,7 @@
 #define HW_MIDI_UART1
 #define HW_MIDI_USB_DEVICE
 #define HW_LED
-#define HW_VOICES   2   // Number of external DCO circuits, max 6
+#define HW_VOICES   3   // Number of external DCO circuits, max 6
 
 
 // -----------------------------------------------------------------------------

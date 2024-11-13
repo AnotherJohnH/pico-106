@@ -78,9 +78,9 @@ public:
 
    void noteOff() override
    {
-      // Clock at 1 MHz to §
+      // Clock at 1 MHz
       clk = 1000000 << 8;
-      dac = 0x30;
+      dac = 0;
    }
 
 private:
