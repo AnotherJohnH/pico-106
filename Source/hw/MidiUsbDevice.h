@@ -20,60 +20,44 @@
 // SOFTWARE.
 //------------------------------------------------------------------------------
 
-// \brief Synth for Raspberry Pi Pico (based around DCOs like the Juno 106)
+// \brief USB MIDI Device
 
-#include <cstdio>
+#pragma once
 
-#include "hw/hw.h"
-
-#include "Synth.h"
-#include "Voice.h"
-
-
-static const unsigned NUM_VOICES = 3;    //!< Number of external DCO circuits, max 6
-static const bool     MIDI_DEBUG = true;
-
-
-static Synth<NUM_VOICES> synth {};
-static hw::MidiIn        midi_in {synth, MIDI_DEBUG};
-static hw::Led           led {};
-
+#include "STB/MIDIInterface.h"
+#include "hw/Config.h"
 
 #if defined(HW_MIDI_USB_DEVICE)
-
-static hw::MidiUSBDevice midi_usb {synth, 0x9106, "pico-106", MIDI_DEBUG};
-
-extern "C" void IRQ_USBCTRL() { midi_usb.usb.irq(); }
+#include "MTL/USBMidiDevice.h"
 
 #endif
 
+namespace hw {
 
-int main()
+#if defined(HW_MIDI_USB_DEVICE)
+
+//! pico micro USB : MIDI in
+class MidiUSBDevice : public MIDI::Interface
 {
-   // Clear screen and cursor to home
-   printf("\e[2J");
-   printf("\e[1,1H");
+public:
+   MidiUSBDevice(MIDI::Instrument& instrument_,
+                 uint16_t          device_id_,
+                 const char*       device_name_,
+                 bool              debug_ = false)
+      : MIDI::Interface(instrument_, debug_)
+      , device("https://github.com/AnotherJohnH",
+               device_id_, PLT_BCD_VERSION, device_name_,
+               PLT_COMMIT)
+   {}
 
-   printf("\n");
-   printf("Program  : pico-106 (%u voices)\n", NUM_VOICES);
-   printf("Author   : Copyright (c) 2024 John D. Haughton\n");
-   printf("License  : MIT\n");
-   printf("Version  : %s\n", PLT_VERSION);
-   printf("Commit   : %s\n", PLT_COMMIT);
-   printf("Built    : %s %s\n", __TIME__, __DATE__);
-   printf("Compiler : %s\n", __VERSION__);
-   printf("\n");
+   bool empty() const override { return device.empty(); }
 
-   while(true)
-   {
-      midi_in.tick();
+   uint8_t rx() override { return device.rx(); }
 
-#if defined(HW_MIDI_USB_DEVICE)
-      midi_usb.tick();
+   MTL::USBMidiDevice device;
+   MTL::Usb           usb{device};
+};
+
 #endif
 
-      led = synth.isAnyVoiceOn();
-   }
-
-   return 0;
-}
+} // namespace hw
