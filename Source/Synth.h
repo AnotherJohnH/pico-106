@@ -29,11 +29,10 @@
 
 
 template <unsigned NUM_VOICES>
-class Synth : public MIDI::Instrument
+class Synth : public MIDI::Instrument<NUM_VOICES>
 {
 public:
    Synth()
-      : MIDI::Instrument(NUM_VOICES)
    {
       voice[0].setDCO(dco1);
       voice[1].setDCO(dco2);
@@ -43,46 +42,21 @@ public:
       voice[5].setDCO(dco6);
    }
 
-   bool isAnyVoiceOn() const { return active != 0; }
-
 private:
-   signed allocVoice() const override
-   {
-      for(unsigned i = 0; i < NUM_VOICES; ++i)
-      {
-         if (not voice[i].isActive()) return i;
-      }
-      return 0;
-   }
-
-   signed findVoice(uint8_t note_) const override
-   {
-      for(unsigned i = 0; i < NUM_VOICES; ++i)
-      {
-         if (voice[i].isPlaying(note_)) return i;
-      }
-      return -1;
-   }
-
    void voiceOn(unsigned index_, uint8_t note_, uint8_t velocity_) override
    {
       voice[index_].noteOn(note_);
-
-      ++active;
    }
 
    void voiceOff(unsigned index_, uint8_t velocity_) override
    {
       voice[index_].noteOff();
-
-      --active;
    }
 
    // Provision for 6 DCOs
    static const unsigned MAX_VOICES = 6;
 
-   Voice    voice[MAX_VOICES];
-   unsigned active{0};
+   Voice voice[MAX_VOICES];
 
    DCO_PWM<MTL::Pio0, MTL::PIN_4>  dco1;
    DCO_PWM<MTL::Pio0, MTL::PIN_6>  dco2;
