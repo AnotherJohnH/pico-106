@@ -23,14 +23,13 @@
 
 import math
 import sys
-import Table
+import table
 
 #------------------------------------------------------------------------------
 # 16-bit (Q4.12) => 24-bit 2^x table
 
-Table.gen('exp_24',
-          bits       = 32,
+table.gen('exp_24',
           func       = lambda i,x : int(math.pow(2.0, i / 4096) * 256 + 0.5),
+          typename   = 'uint32_t',
           log2_size  = 16,
-          prefix     = '0x',
           fmt        = '06x')
