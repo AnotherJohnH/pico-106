@@ -20,10 +20,10 @@
 #  SOFTWARE.
 #-------------------------------------------------------------------------------
 
-cmake_minimum_required(VERSION 3.19.1)
+cmake_minimum_required(VERSION 3.20)
 
 project(pico106
-        LANGUAGES CXX C ASM
+        LANGUAGES CXX ASM
         VERSION 0.1)
 
 add_subdirectory(Platform)
@@ -33,6 +33,7 @@ set(python_path ${CMAKE_CURRENT_SOURCE_DIR}/Platform/python)
 add_subdirectory(Source)
 
 if(${PLT_TARGET} STREQUAL rpipico OR ${PLT_TARGET} STREQUAL rpipico2)
-   # TODO automate conversion of VERSION to hex
-   target_compile_definitions(MTL PUBLIC PLT_BCD_VERSION=0x0001)
+   math(EXPR plt_bcd_version "${CMAKE_MAJOR_VERSION} * 0x100 + ${CMAKE_MINOR_VERSION}"
+        OUTPUT_FORMAT HEXADECIMAL)
+   target_compile_definitions(MTL PUBLIC PLT_BCD_VERSION=${plt_bcd_version})
 endif()
