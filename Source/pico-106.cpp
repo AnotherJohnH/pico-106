@@ -41,9 +41,9 @@ static hw::Led           led {};
 
 #if defined(HW_MIDI_USB_DEVICE)
 
-static hw::MidiUSBDevice midi_usb {synth, 0x9106, "pico-106", MIDI_DEBUG};
+static hw::MidiUSBDevice midi_usb{synth, 0x9106, "pico-106", MIDI_DEBUG};
 
-extern "C" void IRQ_USBCTRL() { midi_usb.usb.irq(); }
+extern "C" void IRQ_USBCTRL() { midi_usb.irq(); }
 
 #endif
 

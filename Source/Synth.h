@@ -29,10 +29,11 @@
 
 
 template <unsigned NUM_VOICES>
-class Synth : public MIDI::Instrument<NUM_VOICES>
+class Synth : public MIDI::Instrument
 {
 public:
    Synth()
+      : MIDI::Instrument(NUM_VOICES)
    {
       voice[0].setDCO(dco1);
       voice[1].setDCO(dco2);

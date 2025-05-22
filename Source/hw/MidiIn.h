@@ -43,7 +43,7 @@ namespace hw {
 class MidiIn : public MIDI::Interface
 {
 public:
-   MidiIn(MIDI::InstrumentBase& instrument_, bool debug_)
+   MidiIn(MIDI::Instrument& instrument_, bool debug_)
       : MIDI::Interface(instrument_, debug_)
    {}
 
@@ -51,6 +51,8 @@ private:
    bool empty() const override { return uart.empty(); }
 
    uint8_t rx() override { return uart.rx(); }
+
+   void tx(uint8_t byte) override {}
 
    MTL::Uart1_P26_P27 uart{/* baud */      31250,
                            /* bits */      8,
@@ -65,7 +67,7 @@ private:
 class MidiIn : public MIDI::Interface
 {
 public:
-   MidiIn(MIDI::InstrumentBase& instrument_, bool debug_)
+   MidiIn(MIDI::Instrument& instrument_, bool debug_)
       : MIDI::Interface(instrument_, debug_)
    {}
 
@@ -74,10 +76,16 @@ private:
 
    uint8_t rx() override { return data[n++]; }
 
+   void tx(uint8_t byte) override {}
+
    unsigned n {0};
+
    uint8_t  data[7] =
    {
-      0x90, 0x3C, 0x7F, 0x40, 0x7F, 0x43, 0x7F
+      0x90,        // NOTE ON
+      0x3C, 0x7F,  // C vel=127
+      0x40, 0x7F,  // E vel=127
+      0x43, 0x7F   // G vel=127
    };
 };
 
